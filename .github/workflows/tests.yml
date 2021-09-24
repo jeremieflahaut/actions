@@ -43,7 +43,7 @@ jobs:
         run: docker exec project8_php php bin/console --env=test doctrine:database:create
 
       - name: Config database
-        run: echo 'DATABASE_URL="mysql://root:password@project8_mysql:3306/project8?serverVersion=5.7"' > app/html/.env
+        run: echo "DATABASE_URL=\"mysql://root:password@project8_mysql:3306/project8?serverVersion=5.7\"" > app/html/.env
 
       - name: Run tests
-        run: php ./app/html/vendor/bin/phpunit
+        run: docker exec project8_php php ./app/html/vendor/bin/phpunit
