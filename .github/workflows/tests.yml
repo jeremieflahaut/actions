@@ -14,8 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build the stack
+      - name: Create docker Network
         run: docker create network project8
+      - name: Start Stack
         run: docker-compose up -d
       - name: Test
         run: docker ps
