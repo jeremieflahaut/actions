@@ -14,13 +14,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: UUID
+        run: id
       - name: Copy ENV
         run: cp .env.example .env
       - name: Create docker Network
         run: docker network create project8
       - name: Start Stack
         run: docker-compose up -d
-      - name: Test
+      - name: Check Stack
         run: docker ps
       - name: Composer install
         run: docker exec project8_php composer install
