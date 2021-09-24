@@ -23,4 +23,4 @@ jobs:
       - name: Test
         run: docker ps
       - name: Composer install
-        run: docker-compose exec project8_php composer install
+        run: docker exec project8_php composer install
