@@ -40,7 +40,7 @@ jobs:
         run: docker exec project8_php composer install
 
       - name: Create database
-        run: docker exec project8_php php bin/console --env=test doctrine:database:create && php bin/console --env=test doctrine:schema:create
+        run: docker exec project8_php php bin/console --env=test doctrine:database:create
 
       - name: Create Schema
         run: docker exec project8_php php bin/console --env=test doctrine:schema:create
