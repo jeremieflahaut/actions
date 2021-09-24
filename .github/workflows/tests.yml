@@ -24,17 +24,11 @@ jobs:
       - name: GID
         run: sed -i "s/GROUP_ID=1000/GROUP_ID=$(id |awk 'BEGIN { FS = "[=(]" } ; { print $4 }')/" .env
 
-      - name: ENV
-        run: cat .env
-
       - name: Create docker Network
         run: docker network create project8
 
       - name: Start Stack
         run: docker-compose up -d
-
-      - name: Check Stack
-        run: docker ps
 
       - name: Composer install
         run: docker exec project8_php composer install
