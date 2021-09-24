@@ -46,4 +46,4 @@ jobs:
         run: docker exec project8_php php bin/console --env=test doctrine:schema:create
 
       - name: Run tests
-        run: docker exec project8_php php ./vendor/bin/phpunit
+        run: docker exec project8_php composer tests

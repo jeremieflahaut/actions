@@ -88,6 +88,9 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "tests": [
+            "vendor/bin/phpunit --colors=always --verbose"
         ]
     },
     "conflict": {
