@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  project8_php:
+    container_name: ${COMPOSE_PROJECT_NAME}_php
+    build: 
+      context: ./.docker/php-fpm
+      args:
+        USER_ID: ${USER_ID:-0}
+        GROUP_ID: ${GROUP_ID:-0}
+    volumes:
+      - ./app/html:/var/www/html
+    restart: always
+    networks:
+      - project8
+    dns:
+      - 8.8.8.8
+
+  nginx:
+    container_name: ${COMPOSE_PROJECT_NAME}_nginx
+    image: nginx:latest
+    volumes:
+      - ./app/html:/var/www/html
+      - ./.docker/nginx/conf.d/:/etc/nginx/conf.d/
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - project8
+    depends_on:
+      - project8_php
+      
+  mysql:
+    container_name: ${COMPOSE_PROJECT_NAME}_mysql
+    image: mysql:5
+    networks:
+        - project8
+    volumes:
+        - mysql-data:/var/lib/mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: always
+
+  phpmyadmin:
+    container_name: ${COMPOSE_PROJECT_NAME}_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    volumes:
+      - .docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+    environment:
+      - PMA_ARBITRARY=${PMA_ARBITRARY}
+      - PMA_ABSOLUTE_URI=${PMA_ABSOLUTE_URI}
+      - PMA_HOST=${COMPOSE_PROJECT_NAME}_mysql
+    restart: always
+    ports:
+      - 8081:80
+    networks:
+      - project8
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
+
+networks:
+  project8:
+    external: true
+    name: project8
