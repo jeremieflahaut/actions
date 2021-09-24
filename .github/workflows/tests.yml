@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Copy ENV
+      - name: Copy .env
         run: cp .env.example .env
 
       - name: UID
