@@ -19,10 +19,10 @@ jobs:
         run: cp .env.example .env
 
       - name: UID
-        run: sed -i "s/USER_ID=1000/$UID/" .env
+        run: sed -i "s/USER_ID=1000/USER_ID=$UID/" .env
 
       - name: GID
-        run: sed -i "s/GROUP_ID=1000/$GID/" .env
+        run: sed -i "s/GROUP_ID=1000/GROUP_ID=$(id |awk 'BEGIN { FS = "[=(]" } ; { print $4 }')/" .env
 
       - name: ENV
         run: cat .env
