@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Create docker Network
-        run: docker create network project8
+        run: docker network create project8
       - name: Start Stack
         run: docker-compose up -d
       - name: Test
