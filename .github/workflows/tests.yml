@@ -39,11 +39,11 @@ jobs:
       - name: Composer install
         run: docker exec project8_php composer install
 
-      - name: Config database
-        run: echo "DATABASE_URL=\"mysql://root:password@project8_mysql:3306/project8?serverVersion=5.7\"" > app/html/.env && cat app/html/.env
-
       - name: Create database
         run: docker exec project8_php php bin/console --env=test doctrine:database:create && php bin/console --env=test doctrine:schema:create
+
+      - name: Create Schema
+        run: docker exec project8_php php bin/console --env=test doctrine:schema:create
 
       - name: Run tests
         run: docker exec project8_php php ./vendor/bin/phpunit
